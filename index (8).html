@@ -1,0 +1,1534 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ApnaAdda</title>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#07090f;--s1:#0d1117;--s2:#141923;--s3:#1c2333;--s4:#252f45;
+  --border:#1e2a3e;--accent:#4f7df7;--accent2:#a78bfa;
+  --green:#22c55e;--red:#ef4444;--text:#dde4f0;--text2:#6b7fa0;--text3:#3a4a65;
+  --me:#1a3878;--them:#141923;--f:'Outfit',sans-serif;
+}
+html,body{height:100%;overflow:hidden;font-family:var(--f);background:var(--bg);color:var(--text);font-size:15px}
+.page{display:none;width:100%;height:100vh}.page.on{display:flex}
+button{font-family:var(--f);cursor:pointer}input,textarea{font-family:var(--f)}
+
+/* ═══ LOGIN ═══ */
+#loginPage{align-items:center;justify-content:center;position:relative;overflow:hidden}
+#loginPage::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 70% 60% at 25% 0%,rgba(79,125,247,.12),transparent 60%),radial-gradient(ellipse 50% 40% at 80% 100%,rgba(167,139,250,.08),transparent 60%)}
+#loginPage::after{content:'';position:absolute;inset:0;background-image:linear-gradient(rgba(79,125,247,.03) 1px,transparent 1px),linear-gradient(90deg,rgba(79,125,247,.03) 1px,transparent 1px);background-size:40px 40px}
+.lw{position:relative;z-index:1;width:100%;max-width:420px;padding:20px;display:flex;flex-direction:column;align-items:center;gap:18px}
+.l-logo{display:flex;align-items:center;gap:12px}
+.logo-box{width:46px;height:46px;border-radius:14px;background:linear-gradient(135deg,var(--accent),var(--accent2));display:flex;align-items:center;justify-content:center;font-size:22px;box-shadow:0 8px 24px rgba(79,125,247,.3)}
+.l-logo h1{font-size:28px;font-weight:800;letter-spacing:-.5px}
+.l-logo h1 span{color:var(--accent)}
+.l-card{width:100%;background:var(--s1);border:1px solid var(--border);border-radius:20px;padding:26px;box-shadow:0 20px 60px rgba(0,0,0,.4);animation:fadeUp .4s ease}
+@keyframes fadeUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
+.l-modes{display:flex;background:var(--s2);border-radius:10px;padding:4px;margin-bottom:20px}
+.l-mode{flex:1;padding:8px 0;border:none;border-radius:7px;background:transparent;color:var(--text2);font-size:13px;font-weight:600;transition:all .2s}
+.l-mode.on{background:var(--s3);color:var(--text);box-shadow:0 2px 8px rgba(0,0,0,.3)}
+.a-tabs{display:flex;background:var(--s2);border-radius:8px;padding:3px;margin-bottom:16px}
+.a-tab{flex:1;padding:7px 0;border:none;border-radius:6px;background:transparent;color:var(--text3);font-size:12px;font-weight:600;transition:all .2s}
+.a-tab.on{background:var(--s3);color:var(--text)}
+.field{display:flex;flex-direction:column;gap:5px;margin-bottom:12px}
+.field label{font-size:11px;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:.6px}
+.field input{padding:11px 13px;background:var(--s2);border:1px solid var(--border);border-radius:10px;color:var(--text);font-size:14px;outline:none;transition:border .2s,box-shadow .2s}
+.field input:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(79,125,247,.1)}
+.field input::placeholder{color:var(--text3)}
+.errb{background:rgba(239,68,68,.1);border:1px solid rgba(239,68,68,.3);border-radius:8px;padding:9px 12px;font-size:13px;color:var(--red);display:none;margin-bottom:10px;align-items:center;gap:6px}
+.errb.on{display:flex}
+.btn-main{width:100%;padding:12px;background:linear-gradient(135deg,var(--accent),var(--accent2));border:none;border-radius:10px;color:#fff;font-size:15px;font-weight:700;transition:opacity .2s,transform .1s;box-shadow:0 4px 16px rgba(79,125,247,.25);margin-bottom:10px}
+.btn-main:hover{opacity:.9}.btn-main:active{transform:scale(.98)}.btn-main:disabled{opacity:.6;cursor:not-allowed}
+.or-div{display:flex;align-items:center;gap:10px;margin:2px 0 10px;color:var(--text3);font-size:12px}
+.or-div::before,.or-div::after{content:'';flex:1;height:1px;background:var(--border)}
+.btn-google{width:100%;padding:10px;background:var(--s2);border:1px solid var(--border);border-radius:10px;color:var(--text);font-size:14px;font-weight:600;display:flex;align-items:center;justify-content:center;gap:10px;transition:all .2s}
+.btn-google:hover{border-color:var(--accent);background:var(--s3)}
+.l-foot{font-size:12px;color:var(--text3);text-align:center}
+#g_username{width:100%;padding:11px 13px 11px 26px;background:var(--s2);border:1px solid var(--border);border-radius:10px;color:var(--text);font-size:14px;outline:none;transition:border .2s,box-shadow .2s}
+#g_username:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(79,125,247,.1)}
+#g_username::placeholder{color:var(--text3)}
+.enc-badge{display:flex;align-items:center;gap:6px;font-size:11px;color:var(--text3);justify-content:center;margin-top:4px}
+.enc-badge .dot{width:6px;height:6px;border-radius:50%;background:var(--green)}
+
+/* ═══ APP ═══ */
+#appPage{flex-direction:row}
+.sidebar{width:300px;flex-shrink:0;background:var(--s1);border-right:1px solid var(--border);display:flex;flex-direction:column;height:100vh}
+.sb-head{padding:13px;border-bottom:1px solid var(--border)}
+.sb-brand{display:flex;align-items:center;gap:8px;margin-bottom:11px}
+.sb-logo{width:28px;height:28px;border-radius:8px;background:linear-gradient(135deg,var(--accent),var(--accent2));display:flex;align-items:center;justify-content:center;font-size:13px}
+.sb-title{font-size:15px;font-weight:800;flex:1}.sb-title span{color:var(--accent)}
+.hbtns{display:flex;gap:5px}
+.hbtn{width:30px;height:30px;border:none;border-radius:8px;background:var(--s3);color:var(--text2);font-size:13px;display:flex;align-items:center;justify-content:center;transition:all .15s}
+.hbtn:hover{background:var(--s4);color:var(--text)}
+.tabs{display:flex;border-bottom:1px solid var(--border);margin-top:2px}
+.tab-btn{flex:1;padding:8px 0;border:none;background:transparent;color:var(--text3);font-size:12px;font-weight:600;border-bottom:2px solid transparent;transition:all .2s}
+.tab-btn.on{color:var(--accent);border-bottom-color:var(--accent)}
+.sb-body{flex:1;overflow:hidden;display:flex;flex-direction:column}
+#chatListTab{display:flex;flex-direction:column;flex:1;overflow-y:auto;padding:8px}
+#peopleTab{display:none;flex-direction:column;flex:1;overflow:hidden;padding:10px}
+.sbox{position:relative;margin-bottom:9px}
+.sbox input{width:100%;padding:9px 13px 9px 33px;background:var(--s2);border:1px solid var(--border);border-radius:9px;color:var(--text);font-size:13px;outline:none;transition:border .2s}
+.sbox input:focus{border-color:var(--accent)}
+.sbox::before{content:'🔍';position:absolute;left:10px;top:50%;transform:translateY(-50%);font-size:12px;pointer-events:none}
+#peopleList{display:flex;flex-direction:column;gap:4px;overflow-y:auto;flex:1}
+.ci{display:flex;align-items:center;gap:9px;padding:9px 10px;border-radius:10px;cursor:pointer;transition:background .12s;position:relative}
+.ci:hover{background:var(--s2)}.ci.active{background:var(--s3)}
+.ci-av{flex-shrink:0}.ci-info{flex:1;min-width:0}
+.ci-r1{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:2px}
+.ci-name{font-size:13px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ci-time{font-size:11px;color:var(--text3);flex-shrink:0;margin-left:6px}
+.ci-r2{display:flex;align-items:center;justify-content:space-between}
+.ci-prev{font-size:12px;color:var(--text2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ubadge{background:var(--accent);color:#fff;font-size:10px;font-weight:700;border-radius:10px;padding:1px 6px;min-width:17px;text-align:center;flex-shrink:0}
+.ci-del{display:none;background:rgba(239,68,68,.15);border:none;border-radius:6px;color:var(--red);font-size:11px;padding:3px 7px;font-weight:700;flex-shrink:0;margin-left:4px}
+.ci:hover .ci-del.show{display:block}
+/* 3-dot menu on chat rows */
+.ci-dots{background:none;border:none;color:var(--text3);font-size:18px;padding:4px 6px;border-radius:7px;flex-shrink:0;line-height:1;cursor:pointer;transition:all .12s;display:flex;align-items:center;justify-content:center;opacity:.5}
+.ci:hover .ci-dots{opacity:1}
+.ci-dots:hover{background:var(--s4);color:var(--text);opacity:1}
+.empty-hint{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;padding:32px 16px;color:var(--text3);font-size:13px;text-align:center}
+.empty-hint .ei{font-size:34px}
+.pi{display:flex;align-items:center;gap:9px;padding:9px 10px;border-radius:10px;cursor:pointer;transition:background .12s}
+.pi:hover{background:var(--s2)}.pi-info{flex:1}
+.pi-name{font-size:13px;font-weight:600}
+.pi-status{font-size:11px}.pi-status.on{color:var(--green)}.pi-status.off{color:var(--text3)}
+.pi-btn{padding:5px 12px;border:none;border-radius:7px;background:var(--accent);color:#fff;font-size:12px;font-weight:600;transition:opacity .15s}
+.pi-btn:hover{opacity:.85}
+.sb-foot{border-top:1px solid var(--border);padding:11px 13px}
+.me-row{display:flex;align-items:center;gap:9px}
+.me-info{flex:1;min-width:0}.me-name{font-size:13px;font-weight:700}.me-id{font-size:11px;color:var(--text2)}
+.out-btn{background:rgba(239,68,68,.08);border:1px solid rgba(239,68,68,.2);color:var(--red);font-size:11px;padding:5px 10px;border-radius:8px;display:flex;align-items:center;gap:5px;transition:all .15s;flex-shrink:0}
+.out-btn:hover{background:rgba(239,68,68,.18);border-color:rgba(239,68,68,.4)}
+
+/* ═══ OVERLAY ═══ */
+.overlay{position:fixed;inset:0;background:rgba(0,0,0,.78);backdrop-filter:blur(8px);z-index:400;display:none;align-items:center;justify-content:center;padding:16px}
+.overlay.on{display:flex}
+.omodal{background:var(--s1);border:1px solid var(--border);border-radius:20px;width:480px;max-width:100%;max-height:88vh;display:flex;flex-direction:column;box-shadow:0 32px 80px rgba(0,0,0,.6);animation:fadeUp .25s ease}
+.om-head{display:flex;align-items:center;padding:17px 22px;border-bottom:1px solid var(--border);flex-shrink:0}
+.om-head h3{font-size:16px;font-weight:700;flex:1}
+.om-close{width:28px;height:28px;border:none;border-radius:7px;background:var(--s2);color:var(--text2);font-size:14px;transition:background .15s}
+.om-close:hover{background:var(--s3);color:var(--text)}
+.om-body{padding:20px 22px;overflow-y:auto}
+.om-label{font-size:11px;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:.6px;margin-bottom:7px;display:block}
+.om-input{width:100%;padding:10px 13px;background:var(--s2);border:1px solid var(--border);border-radius:9px;color:var(--text);font-size:14px;outline:none;margin-bottom:10px;transition:border .2s}
+.om-input:focus{border-color:var(--accent)}.om-input::placeholder{color:var(--text3)}
+.om-row{display:flex;gap:8px;margin-bottom:10px}.om-row .om-input{margin-bottom:0}
+.btn-om{padding:10px 18px;background:var(--accent);border:none;border-radius:9px;color:#fff;font-size:14px;font-weight:700;white-space:nowrap;transition:opacity .15s}
+.btn-om:hover{opacity:.85}.btn-om.red{background:rgba(239,68,68,.15);color:var(--red)}.btn-om.red:hover{background:rgba(239,68,68,.25)}.btn-om.full{width:100%}
+.om-err{font-size:13px;color:var(--red);margin-bottom:8px;display:none;padding:8px 12px;background:rgba(239,68,68,.08);border-radius:7px}.om-err.on{display:block}
+.om-ok{font-size:13px;color:var(--green);margin-bottom:8px;display:none;padding:8px 12px;background:rgba(34,197,94,.08);border-radius:7px}.om-ok.on{display:block}
+.user-table{width:100%;border-collapse:collapse;margin-top:10px}
+.user-table th{font-size:11px;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:.5px;padding:7px 10px;text-align:left;border-bottom:1px solid var(--border)}
+.user-table td{padding:8px 10px;border-bottom:1px solid var(--border);font-size:13px;vertical-align:middle}
+.user-table tr:last-child td{border-bottom:none}.user-table tr:hover td{background:var(--s2)}
+.del-btn{padding:4px 10px;border:none;border-radius:6px;background:rgba(239,68,68,.1);color:var(--red);font-size:11px;font-weight:700;cursor:pointer}
+.del-btn:hover{background:rgba(239,68,68,.2)}
+.mcheck{display:flex;align-items:center;gap:9px;padding:8px 10px;background:var(--s2);border-radius:9px;cursor:pointer}
+.mcheck input{margin-left:auto;width:16px;height:16px;cursor:pointer;accent-color:var(--accent)}
+.prof-av-wrap{display:flex;flex-direction:column;align-items:center;gap:10px;margin-bottom:16px}
+.prof-av-big{width:78px;height:78px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:30px;font-weight:700;color:#fff;position:relative;cursor:pointer;overflow:hidden}
+.prof-av-big img{width:100%;height:100%;object-fit:cover;border-radius:50%}
+.prof-av-big .av-edit{position:absolute;inset:0;background:rgba(0,0,0,.5);display:none;align-items:center;justify-content:center;font-size:18px;border-radius:50%}
+.prof-av-big:hover .av-edit{display:flex}
+.edit-ta{width:100%;padding:10px 13px;background:var(--s2);border:1px solid var(--border);border-radius:9px;color:var(--text);font-size:14px;outline:none;resize:none;min-height:80px;margin-bottom:12px}
+.edit-ta:focus{border-color:var(--accent)}
+#photoInput,#profileImgInput{display:none}
+
+/* ═══ CHAT ═══ */
+.chat-panel{flex:1;display:flex;flex-direction:column;height:100vh;background:var(--bg)}
+.chat-panel.empty{align-items:center;justify-content:center}
+.ncs{text-align:center;color:var(--text3)}.ncs-icon{font-size:52px;margin-bottom:14px}
+.ncs h2{font-size:18px;font-weight:700;color:var(--text2);margin-bottom:6px}.ncs p{font-size:13px}
+.ch{display:flex;align-items:center;gap:10px;padding:11px 16px;background:var(--s1);border-bottom:1px solid var(--border);flex-shrink:0}
+.ch-back{display:none;background:none;border:none;color:var(--text2);font-size:24px;line-height:1;padding:0 4px 0 0}
+.ch-info{flex:1}.ch-name{font-size:15px;font-weight:700}
+.ch-status{font-size:12px}.ch-status.on{color:var(--green)}.ch-status.off{color:var(--text3)}
+.ch-acts{display:flex;gap:5px}
+/* enc pill in header */
+.enc-pill{font-size:10px;font-weight:700;background:rgba(34,197,94,.1);color:var(--green);border:1px solid rgba(34,197,94,.2);border-radius:20px;padding:3px 8px;display:flex;align-items:center;gap:4px}
+/* messages */
+.msgs{flex:1;overflow-y:auto;padding:12px 16px;display:flex;flex-direction:column;gap:4px;scroll-behavior:smooth}
+.date-sep{text-align:center;padding:6px 0;flex-shrink:0}
+.date-sep span{font-size:11px;color:var(--text3);background:var(--bg);padding:3px 11px;border-radius:20px;border:1px solid var(--border)}
+/* ★★★ BUBBLE — display:table is the ONLY reliable shrink-to-content ★★★ */
+.mrow{display:flex;align-items:flex-end;gap:6px;animation:pop .18s ease;padding:1px 0;position:relative}
+.mrow.me{flex-direction:row-reverse}
+@keyframes pop{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
+.m-av{flex-shrink:0;align-self:flex-end}
+/* bwrap: just limits max width */
+.bwrap{max-width:min(68%,440px);position:relative}
+/* reply strip */
+.rp{background:rgba(79,125,247,.1);border-left:3px solid var(--accent);padding:4px 10px;border-radius:6px 6px 0 0;font-size:11px;color:var(--text2);width:100%;box-sizing:border-box}
+.rp strong{color:var(--accent);display:block;font-size:10px;margin-bottom:1px}
+/* ★★★ BUBBLE: display:table = shrinks to content width, no extra height ★★★ */
+.bubble-outer{display:inline-flex;flex-direction:column;max-width:100%}
+.mrow.me .bubble-outer{align-items:flex-end}
+.mrow.them .bubble-outer{align-items:flex-start}
+.bubble{
+  display:table;        /* Magic: sizes to content like inline but allows block children */
+  padding:7px 11px;
+  border-radius:16px;
+  font-size:14px;
+  line-height:1.4;
+  word-break:break-word;
+  white-space:pre-wrap;
+  max-width:100%;
+}
+.bubble.mine{background:var(--me);border-bottom-right-radius:3px}
+.bubble.theirs{background:var(--them);border:1px solid var(--border);border-bottom-left-radius:3px}
+.has-rp .bubble{border-top-left-radius:3px;border-top-right-radius:3px}
+.bubble img.cimg{max-width:200px;max-height:180px;border-radius:9px;display:block;margin-bottom:4px;cursor:pointer;object-fit:cover}
+/* meta row sits OUTSIDE bubble so it doesn't stretch it */
+.m-meta{display:flex;align-items:center;gap:3px;margin-top:2px;padding:0 3px;white-space:nowrap}
+.meta-me{justify-content:flex-end}
+.meta-them{justify-content:flex-start}
+.m-time{font-size:10px;color:var(--text3)}
+.bubble.mine .m-time,.meta-me .m-time{color:rgba(200,210,255,.55)}
+.rtick{font-size:11px;color:var(--text3)}.rtick.seen{color:#60a5fa}
+.etag{font-size:9px;color:var(--text3);font-style:italic}
+.enc-icon{font-size:9px;color:rgba(34,197,94,.35)}
+/* reactions below bubble */
+.reacts{display:flex;flex-wrap:wrap;gap:3px;margin-top:3px}
+.rchip{background:var(--s3);border:1px solid var(--border);border-radius:12px;padding:2px 7px;font-size:12px;cursor:pointer;display:inline-flex;align-items:center;gap:3px;transition:all .15s}
+.rchip:hover{border-color:var(--accent)}.rchip.mine{border-color:var(--accent);background:rgba(79,125,247,.1)}
+.rchip span{font-size:11px;color:var(--text2)}
+/* ── INSTAGRAM-STYLE emoji popup on long-press / hover ── */
+.react-popup{
+  position:absolute;bottom:calc(100% + 6px);
+  display:none;flex-direction:row;gap:2px;
+  background:var(--s1);border:1px solid var(--border);
+  border-radius:24px;padding:5px 8px;
+  z-index:50;box-shadow:0 6px 24px rgba(0,0,0,.5);
+  animation:popIn .15s ease;white-space:nowrap;
+}
+.mrow.me .react-popup{right:0}
+.mrow.them .react-popup{left:0}
+@keyframes popIn{from{opacity:0;transform:scale(.7) translateY(6px)}to{opacity:1;transform:none}}
+.react-popup.on{display:flex}
+.rp-e{font-size:22px;cursor:pointer;padding:2px 4px;border-radius:8px;transition:transform .12s;line-height:1}
+.rp-e:hover{transform:scale(1.35)}
+/* ── THREE-DOT menu button beside bubble ── */
+.dot-btn{
+  display:none;background:none;border:none;
+  color:var(--text3);font-size:18px;line-height:1;
+  padding:4px;border-radius:8px;cursor:pointer;
+  align-self:center;flex-shrink:0;
+  transition:all .15s;
+}
+.mrow:hover .dot-btn{display:flex;align-items:center;justify-content:center}
+.dot-btn:hover{background:var(--s3);color:var(--text)}
+/* context dropdown */
+.ctx{
+  position:fixed;min-width:160px;
+  background:var(--s2);border:1px solid var(--border);
+  border-radius:12px;padding:5px;
+  z-index:600;box-shadow:0 8px 28px rgba(0,0,0,.5);
+  animation:popIn .15s ease;
+}
+.ctx.hidden{display:none}
+.ctx-item{
+  display:flex;align-items:center;gap:9px;
+  padding:9px 12px;border-radius:8px;
+  border:none;background:transparent;
+  color:var(--text);font-family:var(--f);font-size:13px;font-weight:500;
+  cursor:pointer;width:100%;text-align:left;transition:background .12s;
+}
+.ctx-item:hover{background:var(--s3)}
+.ctx-item.danger{color:var(--red)}
+.ctx-item.danger:hover{background:rgba(239,68,68,.1)}
+/* typing, reply bar, input */
+.typing-bar{padding:5px 16px;display:none;align-items:center;gap:8px;font-size:12px;color:var(--text2)}
+.typing-bar.on{display:flex}
+.tdots{display:flex;gap:3px}
+.tdots span{width:5px;height:5px;border-radius:50%;background:var(--text3);animation:tdot 1.2s ease infinite}
+.tdots span:nth-child(2){animation-delay:.2s}.tdots span:nth-child(3){animation-delay:.4s}
+@keyframes tdot{0%,60%,100%{transform:translateY(0)}30%{transform:translateY(-4px)}}
+.reply-bar{display:none;align-items:center;gap:10px;padding:7px 14px;background:var(--s2);border-top:1px solid var(--border)}
+.reply-bar.on{display:flex}
+.rb-txt{flex:1;font-size:12px;color:var(--text2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.rb-txt strong{color:var(--accent);display:block;font-size:11px}
+.rb-x{background:none;border:none;color:var(--text3);font-size:18px;cursor:pointer;line-height:1}
+.rb-x:hover{color:var(--red)}
+.chat-input{display:flex;align-items:flex-end;gap:7px;padding:10px 14px;background:var(--s1);border-top:1px solid var(--border);flex-shrink:0}
+.inp-wrap{flex:1;position:relative}
+#msgTxt{width:100%;padding:10px 40px 10px 14px;background:var(--s2);border:1px solid var(--border);border-radius:22px;color:var(--text);font-size:14px;outline:none;resize:none;min-height:42px;max-height:120px;transition:border .2s;display:block;line-height:1.4}
+#msgTxt:focus{border-color:var(--accent)}#msgTxt::placeholder{color:var(--text3)}
+.att{position:absolute;right:11px;bottom:10px;background:none;border:none;font-size:16px;color:var(--text3);cursor:pointer;transition:color .15s;line-height:1}
+.att:hover{color:var(--text)}
+.send-btn{width:42px;height:42px;border:none;border-radius:50%;background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:transform .1s,opacity .2s;box-shadow:0 4px 12px rgba(79,125,247,.3)}
+.send-btn:hover{opacity:.9}.send-btn:active{transform:scale(.9)}
+/* av */
+.av{border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;color:#fff;flex-shrink:0}
+/* lightbox */
+#lightbox{position:fixed;inset:0;background:rgba(0,0,0,.92);z-index:999;display:none;align-items:center;justify-content:center;cursor:zoom-out}
+#lightbox.on{display:flex}
+#lightbox img{max-width:90vw;max-height:90vh;border-radius:12px;object-fit:contain}
+/* toast */
+.toast{position:fixed;bottom:22px;left:50%;transform:translateX(-50%) translateY(16px);padding:10px 20px;border-radius:10px;font-size:14px;font-weight:600;opacity:0;transition:all .3s;z-index:998;pointer-events:none;white-space:nowrap}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+.toast.ok{background:rgba(34,197,94,.15);border:1px solid rgba(34,197,94,.3);color:var(--green)}
+.toast.err{background:rgba(239,68,68,.15);border:1px solid rgba(239,68,68,.3);color:var(--red)}
+.toast.info{background:var(--s3);border:1px solid var(--border);color:var(--text)}
+::-webkit-scrollbar{width:4px}::-webkit-scrollbar-track{background:transparent}::-webkit-scrollbar-thumb{background:var(--border);border-radius:4px}
+@media(max-width:660px){
+  .sidebar{width:100%;position:absolute;z-index:10;height:100vh}
+  .chat-panel{position:absolute;inset:0;z-index:5;transform:translateX(100%);transition:transform .25s}
+  .chat-panel.open{transform:translateX(0)}
+  .ch-back{display:block!important}
+}
+</style>
+</head>
+<body>
+
+<!-- ═══ LOGIN ═══ -->
+<div id="loginPage" class="page on">
+  <div class="lw">
+    <div class="l-logo"><div class="logo-box">💬</div><h1>Apna<span>Adda</span></h1></div>
+    <div class="l-card">
+      <div style="text-align:center;margin-bottom:20px">
+        <div style="font-size:11px;font-weight:700;color:var(--text3);letter-spacing:2px;text-transform:uppercase;margin-bottom:6px">Welcome back</div>
+        <div style="font-size:20px;font-weight:800;color:var(--text)">LOGIN</div>
+      </div>
+      <div class="l-modes" style="display:none"></div>
+
+      <!-- SINGLE LOGIN FORM -->
+      <div id="adminMode">
+        <div class="field"><label>Username</label><input type="text" id="l_user" placeholder="your_username" onkeydown="if(event.key==='Enter')doAdminLogin()" autocomplete="username"></div>
+        <div class="field"><label>Password</label><input type="password" id="l_pass" placeholder="••••••••" onkeydown="if(event.key==='Enter')doAdminLogin()" autocomplete="current-password"></div>
+        <div class="errb" id="adminErr">⚠ <span id="adminErrMsg"></span></div>
+        <button class="btn-main" id="adminLoginBtn" onclick="doAdminLogin()">Login →</button>
+        <div class="or-div">or</div>
+        <button class="btn-google" onclick="doGoogleLogin()">
+          <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" width="18"> Continue with Google
+        </button>
+        <div id="googleErr" style="font-size:13px;color:var(--red);margin-top:8px;text-align:center;display:none"></div>
+      </div>
+
+      <!-- hidden stubs so old JS refs don't break -->
+      <div id="googleMode" style="display:none">
+        <div id="signInForm"><div class="errb" id="signInErr"><span id="signInErrMsg"></span></div></div>
+        <div id="signUpForm"><div class="errb" id="signUpErr"><span id="signUpErrMsg"></span></div></div>
+      </div>
+    </div>
+    <div class="enc-badge"><div class="dot"></div> End-to-end encrypted · Messages visible only to participants</div>
+    <div class="l-foot">🔐 Accounts are created by admin only</div>
+  </div>
+</div>
+
+<!-- ═══ APP ═══ -->
+<div id="appPage" class="page">
+  <aside class="sidebar">
+    <div class="sb-head">
+      <div class="sb-brand">
+        <div class="sb-logo">💬</div>
+        <div class="sb-title">Apna<span>Adda</span></div>
+        <div class="hbtns">
+          <button class="hbtn" id="adminBtn" title="Admin Panel" onclick="openAdmin()" style="display:none">⚙️</button>
+          <button class="hbtn" title="New Group" onclick="showNewGroup()">👥</button>
+          <button class="hbtn" title="My Profile" onclick="openProfile()">👤</button>
+        </div>
+      </div>
+      <div class="tabs">
+        <button class="tab-btn on" onclick="showTab('chats',this)">Chats</button>
+        <button class="tab-btn" onclick="showTab('people',this)">People</button>
+      </div>
+    </div>
+    <div class="sb-body">
+      <div id="chatListTab"><div class="empty-hint" id="chatEmptyHint"><div class="ei">💬</div><p>No conversations yet</p><p>Go to <strong>People</strong></p></div></div>
+      <div id="peopleTab">
+        <div style="margin-bottom:10px">
+          <div style="font-size:11px;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:.6px;margin-bottom:7px">Find by User ID</div>
+          <div class="sbox" style="margin-bottom:6px"><input type="text" id="peopleSearch" placeholder="@username" oninput="filterPeople()" autocomplete="off" spellcheck="false"></div>
+          <div style="font-size:11px;color:var(--text3);padding:0 2px">Enter the exact username (e.g. <span style="color:var(--accent)">@john_doe</span>)</div>
+        </div>
+        <div id="peopleList" style="display:flex;flex-direction:column;gap:4px;overflow-y:auto;flex:1"></div>
+      </div>
+    </div>
+    <div class="sb-foot">
+      <div class="me-row">
+        <div id="myAv" class="av" style="width:34px;height:34px;font-size:13px;cursor:pointer;flex-shrink:0" onclick="openProfile()"></div>
+        <div class="me-info"><div class="me-name" id="myDN"></div><div class="me-id" id="myID"></div></div>
+        <button class="out-btn" onclick="doLogout()" title="Log out">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+          <span style="font-size:12px;font-weight:700">Log out</span>
+        </button>
+      </div>
+    </div>
+  </aside>
+  <div class="chat-panel empty" id="chatPanel">
+    <div class="ncs"><div class="ncs-icon">💬</div><h2>Welcome to ApnaAdda</h2><p>Select a conversation to start</p></div>
+  </div>
+</div>
+
+<!-- ADMIN PANEL -->
+<div class="overlay" id="adminOverlay" onclick="if(event.target===this)closeAdmin()">
+  <div class="omodal">
+    <div class="om-head"><h3>⚙️ Admin Panel</h3><button class="om-close" onclick="closeAdmin()">✕</button></div>
+    <div class="om-body">
+      <span class="om-label">Create New User</span>
+      <div class="om-row"><input type="text" class="om-input" id="nu_dn" placeholder="Display Name"><input type="text" class="om-input" id="nu_un" placeholder="Username"></div>
+      <input type="password" class="om-input" id="nu_pw" placeholder="Password (min 4 chars)">
+      <div class="om-err" id="nu_err"></div><div class="om-ok" id="nu_ok"></div>
+      <button class="btn-om" onclick="adminCreateUser()">+ Create User</button>
+      <span class="om-label" style="margin-top:20px;display:block">All Users</span>
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px">
+        <div style="font-size:12px;color:var(--text2)">Only you should have <strong style="color:var(--red)">Admin</strong> status unless you granted it</div>
+        <button class="btn-om red" style="padding:6px 12px;font-size:12px" onclick="fixAllUsers()">🔧 Fix All Users</button>
+      </div>
+      <table class="user-table"><thead><tr><th>Name</th><th>Username / Email</th><th>Password</th><th>Type</th><th>Actions</th></tr></thead><tbody id="userTableBody"></tbody></table>
+      <span class="om-label" style="margin-top:20px;display:block">All Chats (Delete)</span>
+      <div id="adminChatList" style="display:flex;flex-direction:column;gap:6px;margin-top:8px"></div>
+    </div>
+  </div>
+</div>
+
+<!-- GROUP MODAL -->
+<div class="overlay" id="groupOverlay" onclick="if(event.target===this)closeGroupModal()">
+  <div class="omodal">
+    <div class="om-head"><h3>👥 Create Group</h3><button class="om-close" onclick="closeGroupModal()">✕</button></div>
+    <div class="om-body">
+      <span class="om-label">Group Name</span>
+      <input type="text" class="om-input" id="grp_name" placeholder="e.g. Friends, Work…">
+      <span class="om-label" style="margin-top:4px;display:block">Members</span>
+      <div id="grp_members" style="display:flex;flex-direction:column;gap:6px;max-height:220px;overflow-y:auto;margin-bottom:14px"></div>
+      <button class="btn-om full" onclick="createGroup()">Create Group 🎉</button>
+    </div>
+  </div>
+</div>
+
+<!-- PROFILE MODAL -->
+<div class="overlay" id="profileOverlay" onclick="if(event.target===this)closeProfile()">
+  <div class="omodal" style="max-width:360px">
+    <div class="om-head"><h3>👤 My Profile</h3><button class="om-close" onclick="closeProfile()">✕</button></div>
+    <div class="om-body">
+      <div class="prof-av-wrap">
+        <div class="prof-av-big" id="profAvBig" onclick="document.getElementById('profileImgInput').click()"><div class="av-edit">✏️</div></div>
+        <div style="font-size:12px;color:var(--text2)">Tap to change photo</div>
+      </div>
+      <input type="file" id="profileImgInput" accept="image/*" onchange="uploadProfilePic(event)">
+      <span class="om-label">Display Name</span><input type="text" class="om-input" id="prof_name" placeholder="Your name">
+      <span class="om-label">Bio</span><input type="text" class="om-input" id="prof_bio" placeholder="Something about you…" maxlength="80">
+      <div class="om-ok" id="prof_ok"></div>
+      <button class="btn-om full" onclick="saveProfile()">Save Profile</button>
+    </div>
+  </div>
+</div>
+
+<!-- EDIT MSG MODAL -->
+<div class="overlay" id="editModal" onclick="if(event.target===this)closeEdit()" style="z-index:500">
+  <div class="omodal" style="max-width:380px">
+    <div class="om-head"><h3>✏️ Edit Message</h3><button class="om-close" onclick="closeEdit()">✕</button></div>
+    <div class="om-body">
+      <textarea class="edit-ta" id="editTxt"></textarea>
+      <div style="display:flex;gap:8px">
+        <button class="btn-om" style="flex:1" onclick="saveEdit()">Save</button>
+        <button class="btn-om red" style="flex:1" onclick="closeEdit()">Cancel</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="lightbox" onclick="this.classList.remove('on')"><img id="lightboxImg" src="" alt=""></div>
+<input type="file" id="photoInput" accept="image/*" onchange="handlePhoto(event)">
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import {
+  getFirestore,collection,doc,setDoc,getDoc,getDocs,addDoc,updateDoc,
+  deleteDoc,onSnapshot,query,where,orderBy,serverTimestamp,writeBatch,limit
+} from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+import {
+  getAuth,createUserWithEmailAndPassword,signInWithEmailAndPassword,
+  GoogleAuthProvider,signInWithPopup,signOut,onAuthStateChanged,updateProfile,
+  deleteUser as fbDeleteUser, fetchSignInMethodsForEmail, sendEmailVerification, reload,
+  EmailAuthProvider, linkWithCredential
+} from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+
+// ════ FIREBASE CONFIG ════
+const firebaseConfig={
+  apiKey:"AIzaSyDZiiq5OyVTiqqpFOOyJjv4U3VZK7dihF4",
+  authDomain:"nexchat-4701f.firebaseapp.com",
+  projectId:"nexchat-4701f",
+  storageBucket:"nexchat-4701f.firebasestorage.app",
+  messagingSenderId:"528433755926",
+  appId:"1:528433755926:web:70ad6d1d2bb082b7598237"
+};
+const fbApp=initializeApp(firebaseConfig);
+const db=getFirestore(fbApp);
+const auth=getAuth(fbApp);
+const gProvider=new GoogleAuthProvider();
+
+// ════ E2E ENCRYPTION ENGINE ════
+// AES-256-GCM — messages encrypted before storing in Firestore
+// Key = PBKDF2 derived from both UIDs + app secret
+// Nobody (not admin, not Firebase) can read encrypted messages
+const ENC_SECRET='nexchat-e2e-v2-secret-2025';
+
+async function deriveKey(uid1,uid2){
+  const ids=[uid1,uid2].sort().join(':');
+  const raw=await crypto.subtle.importKey('raw',new TextEncoder().encode(ENC_SECRET+ids),'PBKDF2',false,['deriveKey']);
+  return crypto.subtle.deriveKey(
+    {name:'PBKDF2',salt:new TextEncoder().encode('nxc-salt-'+ids),hash:'SHA-256',iterations:50000},
+    raw,{name:'AES-GCM',length:256},false,['encrypt','decrypt']
+  );
+}
+
+async function encryptMsg(plaintext,key){
+  const iv=crypto.getRandomValues(new Uint8Array(12));
+  const ct=await crypto.subtle.encrypt({name:'AES-GCM',iv},key,new TextEncoder().encode(plaintext));
+  const combined=new Uint8Array(12+ct.byteLength);
+  combined.set(iv,0);combined.set(new Uint8Array(ct),12);
+  return btoa(String.fromCharCode(...combined));
+}
+
+async function decryptMsg(b64,key){
+  try{
+    const bytes=Uint8Array.from(atob(b64),c=>c.charCodeAt(0));
+    const iv=bytes.slice(0,12),ct=bytes.slice(12);
+    const pt=await crypto.subtle.decrypt({name:'AES-GCM',iv},key,ct);
+    return new TextDecoder().decode(pt);
+  }catch{return '[Encrypted message]';}
+}
+
+// Cache derived keys per conversation
+const keyCache={};
+async function getKey(uid1,uid2){
+  const k=[uid1,uid2].sort().join('-');
+  if(!keyCache[k])keyCache[k]=await deriveKey(uid1,uid2);
+  return keyCache[k];
+}
+
+// For group chats use a shared group key derived from group ID
+async function getGroupKey(groupId){
+  if(!keyCache['g:'+groupId]){
+    const raw=await crypto.subtle.importKey('raw',new TextEncoder().encode(ENC_SECRET+'group:'+groupId),'PBKDF2',false,['deriveKey']);
+    keyCache['g:'+groupId]=await crypto.subtle.deriveKey(
+      {name:'PBKDF2',salt:new TextEncoder().encode('nxc-grp-'+groupId),hash:'SHA-256',iterations:50000},
+      raw,{name:'AES-GCM',length:256},false,['encrypt','decrypt']
+    );
+  }
+  return keyCache['g:'+groupId];
+}
+
+// ════ STATE ════
+let me=null,activeChatId=null,activeChatType=null,allUsers=[];
+let unsubChats=null,unsubMsgs=null,unsubPresence={};
+let presenceTimer=null,typingTimer=null,replyTo=null,editState=null;
+const COLORS=['#6366f1','#ec4899','#0ea5e9','#f59e0b','#ef4444','#8b5cf6','#10b981','#f97316'];
+const REACTS=['👍','❤️','😂','😮','😢','🔥'];
+
+const $=id=>document.getElementById(id);
+const esc=s=>String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+const inits=n=>(n||'?').split(' ').map(w=>w[0]).join('').toUpperCase().slice(0,2);
+const uClr=uid=>COLORS[(uid||'x').split('').reduce((a,c)=>a+c.charCodeAt(0),0)%COLORS.length];
+const fmtT=ts=>{try{return(ts?.toDate?ts.toDate():new Date()).toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'});}catch{return '';}};
+const fmtD=ts=>{try{const d=ts?.toDate?ts.toDate():new Date(),n=new Date();return d.toDateString()===n.toDateString()?'Today':d.toLocaleDateString();}catch{return '';}};
+function showPage(id){document.querySelectorAll('.page').forEach(p=>p.classList.remove('on'));$(id).classList.add('on');}
+function toast(msg,type='info'){const t=document.createElement('div');t.className=`toast ${type}`;t.textContent=msg;document.body.appendChild(t);setTimeout(()=>t.classList.add('show'),10);setTimeout(()=>{t.classList.remove('show');setTimeout(()=>t.remove(),300)},3200);}
+function avEl(name,uid,size=38,photo=null){
+  if(photo)return`<div class="av" style="width:${size}px;height:${size}px;padding:0;overflow:hidden"><img src="${photo}" style="width:100%;height:100%;object-fit:cover;border-radius:50%"></div>`;
+  return`<div class="av" style="width:${size}px;height:${size}px;font-size:${Math.floor(size*.35)}px;background:${uClr(uid||name||'x')}">${inits(name)}</div>`;
+}
+
+// ════ LOGIN UI ════
+window.switchMode=function(mode,btn){
+  document.querySelectorAll('.l-mode').forEach(b=>b.classList.remove('on'));btn.classList.add('on');
+  $('adminMode').style.display=mode==='admin'?'block':'none';
+  $('googleMode').style.display=mode==='google'?'block':'none';
+  clearAllErrors();
+}
+window.switchAuthTab=function(tab,btn){
+  document.querySelectorAll('.a-tab').forEach(b=>b.classList.remove('on'));btn.classList.add('on');
+  $('signInForm').style.display=tab==='in'?'block':'none';
+  $('signUpForm').style.display=tab==='up'?'block':'none';
+  clearAllErrors();
+}
+function clearAllErrors(){['adminErr','signInErr','signUpErr'].forEach(id=>$(id).classList.remove('on'));}
+function setErr(boxId,msgId,msg){$(msgId).textContent=msg;$(boxId).classList.add('on');}
+
+// ════ ADMIN LOGIN ════
+window.doAdminLogin=async function(){
+  const username=$('l_user').value.trim().toLowerCase();
+  const password=$('l_pass').value;
+  clearAllErrors();
+  if(!username||!password){setErr('adminErr','adminErrMsg','Please enter username and password.');return;}
+  $('adminLoginBtn').disabled=true;$('adminLoginBtn').textContent='Signing in…';
+  try{
+    const snap=await getDoc(doc(db,'users',username));
+    if(!snap.exists()){setErr('adminErr','adminErrMsg','Username not found. Ask your admin.');return;}
+    const u=snap.data();
+    if(u.banned){setErr('adminErr','adminErrMsg','Account suspended. Contact admin.');return;}
+    if(u.password!==password){setErr('adminErr','adminErrMsg','Wrong password. Try again.');return;}
+    me={uid:username,username,displayName:u.displayName,isAdmin:u.isAdmin||false,photoURL:u.photoURL||null,loginType:'admin'};
+    sessionStorage.setItem('nc_u',JSON.stringify(me));
+    await updateDoc(doc(db,'users',username),{online:true,lastSeen:serverTimestamp()});
+    launchApp();
+  }catch(e){setErr('adminErr','adminErrMsg','Error: '+e.message);console.error(e);}
+  finally{$('adminLoginBtn').disabled=false;$('adminLoginBtn').textContent='Sign In →';}
+}
+
+// ════ EMAIL SIGN IN ════
+window.doEmailSignIn=async function(){
+  const email=$('g_email').value.trim();const pass=$('g_pass').value;
+  clearAllErrors();
+  if(!email||!pass){setErr('signInErr','signInErrMsg','Fill all fields.');return;}
+  $('signInBtn').disabled=true;$('signInBtn').textContent='Signing in…';
+  try{
+    const cred=await signInWithEmailAndPassword(auth,email,pass);
+    await handleFbUser(cred.user);
+  }catch(e){setErr('signInErr','signInErrMsg',fbErr(e.code));}
+  finally{$('signInBtn').disabled=false;$('signInBtn').textContent='Sign In →';}
+}
+
+// ════ USERNAME AVAILABILITY CHECK ════
+let _unameTimer=null;
+window.checkUsernameAvail=function(){
+  clearTimeout(_unameTimer);
+  const val=$('g_username').value.trim().toLowerCase().replace(/^@/,'');
+  const status=$('unameStatus');
+  $('g_username').value=val; // strip @ if typed
+  if(!val){status.textContent='';return;}
+  if(!/^[a-z0-9_]{2,20}$/.test(val)){
+    status.innerHTML='<span style="color:var(--red)">⚠ 2–20 chars, letters/numbers/underscore only</span>';return;
+  }
+  status.innerHTML='<span style="color:var(--text3)">Checking…</span>';
+  _unameTimer=setTimeout(async()=>{
+    try{
+      const snap=await getDoc(doc(db,'users',val));
+      if(snap.exists()){status.innerHTML='<span style="color:var(--red)">✗ @'+val+' is already taken</span>';}
+      else{status.innerHTML='<span style="color:var(--green)">✓ @'+val+' is available</span>';}
+    }catch{status.textContent='';}
+  },500);
+}
+
+// ════ EMAIL SIGN UP ════
+let _pendingSignupUser=null; // holds firebase user during OTP wait
+window.doEmailSignUp=async function(){
+  const name=$('g_name').value.trim();
+  const username=$('g_username').value.trim().toLowerCase().replace(/^@/,'');
+  const email=$('g_email2').value.trim();
+  const pass=$('g_pass2').value;
+  const pass2=$('g_pass3').value;
+  clearAllErrors();
+  if(!name||!username||!email||!pass){setErr('signUpErr','signUpErrMsg','All fields required.');return;}
+  if(!/^[a-z0-9_]{2,20}$/.test(username)){setErr('signUpErr','signUpErrMsg','Username: 2–20 chars, letters/numbers/underscore only.');return;}
+  if(pass!==pass2){setErr('signUpErr','signUpErrMsg','Passwords do not match.');return;}
+  if(pass.length<6){setErr('signUpErr','signUpErrMsg','Password must be 6+ characters.');return;}
+  $('signUpBtn').disabled=true;$('signUpBtn').textContent='Creating account…';
+  try{
+    // Check username uniqueness
+    const unSnap=await getDoc(doc(db,'usernames',username));
+    if(unSnap.exists()){setErr('signUpErr','signUpErrMsg','Username @'+username+' is already taken. Choose another.');return;}
+
+    let fbUser=null;
+
+    // Step 1: Try creating a brand-new email/password account
+    try{
+      const cred=await createUserWithEmailAndPassword(auth,email,pass);
+      fbUser=cred.user;
+      await updateProfile(fbUser,{displayName:name});
+    }catch(e){
+      if(e.code!=='auth/email-already-in-use'){throw e;}
+
+      // Email already exists in Firebase Auth (could be Google-only or email account)
+      // Try signing in with the provided password
+      try{
+        const cred=await signInWithEmailAndPassword(auth,email,pass);
+        fbUser=cred.user;
+        if(name&&fbUser.displayName!==name)await updateProfile(fbUser,{displayName:name});
+      }catch(signInErr){
+        if(signInErr.code==='auth/wrong-password'||signInErr.code==='auth/invalid-credential'){
+          // Account exists but with different password (likely Google-only)
+          // Link email+password credential to the existing account via Google sign-in
+          try{
+            const googleResult=await signInWithPopup(auth,gProvider);
+            fbUser=googleResult.user;
+            // Now link email/password to this Google account
+            const emailCred=EmailAuthProvider.credential(email,pass);
+            try{await linkWithCredential(fbUser,emailCred);}catch(linkErr){
+              // Already linked or other issue — still proceed, user has the account
+              if(linkErr.code!=='auth/provider-already-linked'&&linkErr.code!=='auth/email-already-in-use'){
+                console.warn('Link warning:',linkErr.code);
+              }
+            }
+            await updateProfile(fbUser,{displayName:name});
+          }catch(googleErr){
+            if(googleErr.code==='auth/popup-closed-by-user'){
+              setErr('signUpErr','signUpErrMsg','Sign-in was cancelled. Please try again.');
+            }else{
+              setErr('signUpErr','signUpErrMsg',fbErr(googleErr.code));
+            }
+            return;
+          }
+        }else{
+          setErr('signUpErr','signUpErrMsg',fbErr(signInErr.code));return;
+        }
+      }
+    }
+
+    // Step 2: Send OTP verification email — always, regardless of account type
+    try{await sendEmailVerification(fbUser);}catch(otpErr){
+      // If already verified, skip OTP
+      if(!fbUser.emailVerified){throw otpErr;}
+    }
+
+    if(fbUser.emailVerified){
+      // Already verified — go straight in
+      await handleFbUser(fbUser,name,username);
+      toast(`Welcome, ${name}! 🎉`,'ok');
+      return;
+    }
+
+    // Show OTP verification screen
+    _pendingSignupUser={fbUser,name,username};
+    $('verifyEmailDisplay').textContent=email;
+    $('signUpStep1').style.display='none';
+    $('signUpStep2').style.display='block';
+    $('verifyErr').style.display='none';
+
+  }catch(e){
+    if(e.code)setErr('signUpErr','signUpErrMsg',fbErr(e.code));
+    else setErr('signUpErr','signUpErrMsg','Something went wrong. Try again.');
+    console.error(e);
+  }finally{$('signUpBtn').disabled=false;$('signUpBtn').textContent='Create Account →';}
+}
+
+// ════ EMAIL VERIFICATION HELPERS ════
+window.checkEmailVerified=async function(){
+  if(!_pendingSignupUser){return;}
+  $('verifyDoneBtn').disabled=true;$('verifyDoneBtn').textContent='Checking…';
+  $('verifyErr').style.display='none';
+  try{
+    await reload(_pendingSignupUser.fbUser);
+    if(_pendingSignupUser.fbUser.emailVerified){
+      await handleFbUser(_pendingSignupUser.fbUser,_pendingSignupUser.name,_pendingSignupUser.username);
+      toast(`Email verified! Welcome, ${_pendingSignupUser.name} 🎉`,'ok');
+      _pendingSignupUser=null;
+    }else{
+      $('verifyErr').textContent='Email not yet verified. Please click the link in your inbox.';
+      $('verifyErr').style.display='block';
+    }
+  }catch(e){$('verifyErr').textContent='Error: '+e.message;$('verifyErr').style.display='block';}
+  finally{$('verifyDoneBtn').disabled=false;$('verifyDoneBtn').textContent='✅ I\'ve verified my email';}
+}
+window.resendVerification=async function(){
+  if(!_pendingSignupUser){return;}
+  try{await sendEmailVerification(_pendingSignupUser.fbUser);toast('Verification email resent!','ok');}
+  catch(e){toast('Could not resend: '+e.message,'err');}
+}
+window.cancelVerification=function(){
+  if(_pendingSignupUser){try{_pendingSignupUser.fbUser.delete();}catch{}}
+  _pendingSignupUser=null;
+  $('signUpStep1').style.display='block';
+  $('signUpStep2').style.display='none';
+}
+
+// ════ GOOGLE LOGIN ════
+window.doGoogleLogin=async function(){
+  const errEl=$('googleErr');
+  if(errEl){errEl.style.display='none';}
+  try{
+    const result=await signInWithPopup(auth,gProvider);
+    await handleFbUser(result.user);
+  }catch(e){
+    if(e.code!=='auth/popup-closed-by-user'){
+      const msg=fbErr(e.code);
+      if(errEl&&msg){errEl.textContent=msg;errEl.style.display='block';}
+    }
+  }
+}
+
+// ════ HANDLE FIREBASE USER → FIRESTORE ════
+async function handleFbUser(fbUser,forceName=null,forceUsername=null){
+  const uid=fbUser.uid;
+  const displayName=forceName||fbUser.displayName||fbUser.email?.split('@')[0]||'User';
+  const photoURL=fbUser.photoURL||null;
+  const email=fbUser.email||'';
+  // Check banned list first
+  try{
+    const bannedSnap=await getDoc(doc(db,'banned',uid));
+    if(bannedSnap.exists()){
+      await signOut(auth);
+      setErr('signInErr','signInErrMsg','This account was removed by admin.');
+      setErr('signUpErr','signUpErrMsg','This account was removed by admin.');
+      showPage('loginPage');
+      return;
+    }
+  }catch{}
+  // Get Firestore doc — always create if missing (handles deleted-from-Firestore case)
+  const snap=await getDoc(doc(db,'users',uid));
+  if(!snap.exists()){
+    // If a username was provided (email signup), use that; otherwise derive from email
+    const nexchat_username=forceUsername||(email?email.split('@')[0].toLowerCase().replace(/[^a-z0-9_]/g,'_'):'user_'+uid.slice(0,6));
+    await setDoc(doc(db,'users',uid),{
+      uid,displayName,email,photoURL,
+      nexchat_username,
+      isAdmin:false,online:true,lastSeen:serverTimestamp(),
+      createdAt:serverTimestamp(),bio:'',loginType:'firebase'
+    });
+    // Also store a username-index doc for lookups
+    await setDoc(doc(db,'usernames',nexchat_username),{uid});
+  }else{
+    const updates={online:true,lastSeen:serverTimestamp()};
+    if(displayName&&displayName!==snap.data().displayName)updates.displayName=displayName;
+    if(photoURL&&photoURL!==snap.data().photoURL)updates.photoURL=photoURL;
+    await updateDoc(doc(db,'users',uid),updates);
+  }
+  const freshSnap=await getDoc(doc(db,'users',uid));
+  const ud=freshSnap.data()||{};
+  const nexchat_username=ud.nexchat_username||email.split('@')[0]||uid.slice(0,8);
+  me={uid,username:nexchat_username,displayName:ud.displayName||displayName,isAdmin:ud.isAdmin||false,photoURL:ud.photoURL||null,loginType:'firebase',email};
+  sessionStorage.setItem('nc_u',JSON.stringify(me));
+  launchApp();
+}
+
+// Handle Firebase auth state (Google/email page refresh)
+onAuthStateChanged(auth,async fbUser=>{
+  if(fbUser){
+    const saved=sessionStorage.getItem('nc_u');
+    if(saved){try{const u=JSON.parse(saved);if(u.loginType==='firebase'&&u.uid===fbUser.uid){me=u;showPage('appPage');initApp();return;}}catch{}}
+    // Restore session silently
+    try{await handleFbUser(fbUser);}catch(e){console.error(e);}
+  }
+});
+
+function fbErr(code){
+  return({'auth/email-already-in-use':'Email already registered. Try signing in instead.','auth/invalid-email':'Invalid email address.','auth/weak-password':'Password too weak — use 6+ characters.','auth/user-not-found':'No account with that email. Try creating one.','auth/wrong-password':'Wrong password.','auth/invalid-credential':'Wrong email or password.','auth/too-many-requests':'Too many attempts. Wait a moment.','auth/popup-closed-by-user':'','auth/popup-blocked':'Allow popups in your browser for Google sign-in.','auth/operation-not-allowed':'Enable Email/Password sign-in in Firebase Console → Authentication → Sign-in method.'})[code]||'Error: '+code;
+}
+
+// ════ AUTO LOGIN ════
+window.addEventListener('DOMContentLoaded',async()=>{
+  const saved=sessionStorage.getItem('nc_u');
+  if(saved){
+    try{
+      const u=JSON.parse(saved);
+      if(u.loginType==='firebase'){me=u;showPage('appPage');initApp();return;}
+      const snap=await getDoc(doc(db,'users',u.uid));
+      if(snap.exists()&&!snap.data().banned){me=u;showPage('appPage');initApp();return;}
+    }catch{}
+    sessionStorage.removeItem('nc_u');
+  }
+  showPage('loginPage');
+});
+
+function launchApp(){showPage('appPage');initApp();}
+
+// ════ LOGOUT ════
+window.doLogout=async function(){
+  clearAll();
+  try{await updateDoc(doc(db,'users',me.uid),{online:false,lastSeen:serverTimestamp()});}catch{}
+  if(me?.loginType==='firebase'){try{await signOut(auth);}catch{}}
+  sessionStorage.removeItem('nc_u');
+  me=null;activeChatId=null;allUsers=[];replyTo=null;
+  resetChatPanel();
+  showPage('loginPage');
+  $('l_user').value='';$('l_pass').value='';
+}
+
+// ════ APP INIT ════
+async function initApp(){
+  const myav=$('myAv');
+  if(me.photoURL){myav.style.padding='0';myav.style.overflow='hidden';myav.innerHTML=`<img src="${me.photoURL}" style="width:100%;height:100%;object-fit:cover;border-radius:50%">`;}
+  else{myav.textContent=inits(me.displayName);myav.style.background=uClr(me.uid);}
+  $('myDN').textContent=me.displayName;
+  $('myID').textContent='@'+(me.username||me.uid.slice(0,8));
+  if(me.isAdmin)$('adminBtn').style.display='flex';
+  updatePresence(true);
+  presenceTimer=setInterval(()=>updatePresence(true),25000);
+  window.addEventListener('beforeunload',()=>{try{updateDoc(doc(db,'users',me.uid),{online:false,lastSeen:serverTimestamp()});}catch{}});
+  await loadAllUsers();listenChats();
+}
+async function updatePresence(online){if(!me||!db)return;try{await updateDoc(doc(db,'users',me.uid),{online,lastSeen:serverTimestamp()});}catch{}}
+function clearAll(){clearInterval(presenceTimer);clearTimeout(typingTimer);if(unsubChats){unsubChats();unsubChats=null;}if(unsubMsgs){unsubMsgs();unsubMsgs=null;}Object.values(unsubPresence).forEach(fn=>fn&&fn());unsubPresence={};}
+function resetChatPanel(){const p=$('chatPanel');p.className='chat-panel empty';p.innerHTML=`<div class="ncs"><div class="ncs-icon">💬</div><h2>Welcome to ApnaAdda</h2><p>Select a conversation to start</p></div>`;}
+
+// ════ USERS ════
+async function loadAllUsers(){
+  try{const snap=await getDocs(collection(db,'users'));allUsers=[];snap.forEach(d=>{if(d.id!==me.uid)allUsers.push({uid:d.id,...d.data()});});}catch(e){console.error(e);}
+}
+window.filterPeople=async function(){
+  const raw=$('peopleSearch').value.trim();
+  const query_un=raw.replace(/^@/,'').toLowerCase();
+  const list=$('peopleList');
+  if(!query_un){
+    list.innerHTML=`<div class="empty-hint" style="padding:20px"><div class="ei">🔍</div><p>Enter an exact <strong style="color:var(--accent)">@username</strong> to find someone</p></div>`;
+    return;
+  }
+  list.innerHTML=`<div class="empty-hint" style="padding:20px"><div class="ei">⏳</div><p>Looking up @${esc(query_un)}…</p></div>`;
+  try{
+    // Lookup via usernames index (exact match only)
+    const idxSnap=await getDoc(doc(db,'usernames',query_un));
+    if(!idxSnap.exists()){
+      // Fallback: check if admin account with this username exists
+      const adminSnap=await getDoc(doc(db,'users',query_un));
+      if(adminSnap.exists()&&adminSnap.data().loginType==='admin'&&!adminSnap.data().banned&&adminSnap.id!==me.uid){
+        renderPersonCard(adminSnap.id,adminSnap.data(),list);
+      }else{
+        list.innerHTML=`<div class="empty-hint" style="padding:20px"><div class="ei">🔍</div><p>No user found with ID <strong style="color:var(--accent)">@${esc(query_un)}</strong></p><p style="font-size:11px;margin-top:4px">Check the exact username and try again</p></div>`;
+      }
+      return;
+    }
+    const uid=idxSnap.data().uid;
+    if(uid===me.uid){
+      list.innerHTML=`<div class="empty-hint" style="padding:20px"><div class="ei">😄</div><p>That's you!</p></div>`;
+      return;
+    }
+    const userSnap=await getDoc(doc(db,'users',uid));
+    if(!userSnap.exists()||userSnap.data().banned){
+      list.innerHTML=`<div class="empty-hint" style="padding:20px"><div class="ei">🚫</div><p>This account is not available</p></div>`;
+      return;
+    }
+    renderPersonCard(uid,userSnap.data(),list);
+  }catch(e){list.innerHTML=`<div class="empty-hint" style="padding:20px"><div class="ei">⚠️</div><p>Lookup failed. Try again.</p></div>`;console.error(e);}
+}
+function renderPersonCard(uid,u,list){
+  list.innerHTML=`
+    <div class="pi" onclick="goChat('${uid}','${esc(u.displayName)}')">
+      ${avEl(u.displayName,uid,38,u.photoURL)}
+      <div class="pi-info">
+        <div class="pi-name">${esc(u.displayName)}</div>
+        <div style="font-size:11px;color:var(--accent);margin-bottom:2px">@${esc(u.nexchat_username||u.username||uid)}</div>
+        <div class="pi-status ${u.online?'on':'off'}">${u.online?'● Online':'● Offline'}</div>
+        ${u.bio?`<div style="font-size:11px;color:var(--text3);margin-top:2px">${esc(u.bio)}</div>`:''}
+      </div>
+      <button class="pi-btn" onclick="event.stopPropagation();goChat('${uid}','${esc(u.displayName)}')">Chat →</button>
+    </div>`;
+}
+function renderPeople(){/* no-op — people tab uses filterPeople now */}
+
+// ════ CHAT LIST ════
+function listenChats(){
+  if(unsubChats){unsubChats();unsubChats=null;}
+  const q=query(collection(db,'chats'),where('members','array-contains',me.uid));
+  unsubChats=onSnapshot(q,async snap=>{
+    const chats=[];
+    snap.forEach(d=>{
+      const data=d.data();
+      // Skip chats the user has hidden
+      if((data.hiddenFor||{})[me.uid])return;
+      chats.push({id:d.id,...data});
+    });
+    chats.sort((a,b)=>(b.lastAt?.seconds||0)-(a.lastAt?.seconds||0));
+    await renderChatList(chats);
+  });
+}
+async function renderChatList(chats){
+  if(!chats.length){$('chatEmptyHint').style.display='flex';return;}
+  $('chatEmptyHint').style.display='none';
+  const rows=await Promise.all(chats.map(async chat=>{
+    let name='',uid2='',isGroup=chat.type==='group';
+    if(isGroup){name=chat.name||'Group';}
+    else{uid2=chat.members.find(m=>m!==me.uid)||'';const u=allUsers.find(x=>x.uid===uid2);name=u?.displayName||uid2;}
+    const unread=(chat.unread||{})[me.uid]||0;
+    const prev=chat.lastMsgPreview||'Encrypted message';
+    const t=chat.lastAt?fmtT(chat.lastAt):'';
+    const adminDel=me.isAdmin?`<button class="ci-del show" onclick="event.stopPropagation();adminDeleteChat('${chat.id}','${esc(name)}')">🗑</button>`:'';
+    return `<div class="ci${activeChatId===chat.id?' active':''}" onclick="openChatById('${chat.id}','${isGroup?'group':'direct'}','${esc(name)}','${uid2}')">
+      <div class="ci-av">${isGroup?`<div class="av" style="width:40px;height:40px;font-size:15px;background:#6366f1">👥</div>`:avEl(name,uid2,40,allUsers.find(x=>x.uid===uid2)?.photoURL)}</div>
+      <div class="ci-info">
+        <div class="ci-r1"><span class="ci-name">${esc(name)}</span><span class="ci-time">${t}</span></div>
+        <div class="ci-r2"><span class="ci-prev">🔒 ${esc(prev.slice(0,35))}</span>${unread>0?`<span class="ubadge">${unread}</span>`:''}</div>
+      </div>
+      <button class="ci-dots" onclick="event.stopPropagation();openChatDotMenu(event,'${chat.id}','${esc(name)}','${isGroup?'group':'direct'}')">⋮</button>
+      ${adminDel}</div>`;
+  }));
+  $('chatListTab').innerHTML=rows.join('');
+}
+
+// ════ OPEN CHAT ════
+window.openDirectChat=async function(uid2,name){
+  const q=query(collection(db,'chats'),where('members','array-contains',me.uid),where('type','==','direct'));
+  const snap=await getDocs(q);let chatId=null;
+  snap.forEach(d=>{if(d.data().members.includes(uid2))chatId=d.id;});
+  if(!chatId){
+    const ref=await addDoc(collection(db,'chats'),{type:'direct',members:[me.uid,uid2],createdAt:serverTimestamp(),lastMsgPreview:'',lastAt:serverTimestamp(),unread:{[me.uid]:0,[uid2]:0}});
+    chatId=ref.id;
+  }
+  openChatById(chatId,'direct',name,uid2);
+  if(window.innerWidth<=660)$('chatPanel').classList.add('open');
+}
+
+window.openChatById=async function(chatId,type,name,uid2){
+  activeChatId=chatId;activeChatType=type;replyTo=null;
+  if(unsubMsgs){unsubMsgs();unsubMsgs=null;}
+  if(unsubPresence[uid2]){unsubPresence[uid2]();delete unsubPresence[uid2];}
+  try{const u={};u[`unread.${me.uid}`]=0;await updateDoc(doc(db,'chats',chatId),u);}catch{}
+  const panel=$('chatPanel');
+  panel.className='chat-panel'+(window.innerWidth<=660?' open':'');
+  let stTxt='',stCls='off';
+  if(type==='direct'&&uid2){const u=allUsers.find(x=>x.uid===uid2)||{};stTxt=u.online?'Online':`Last seen ${u.lastSeen?fmtT(u.lastSeen):''}`;stCls=u.online?'on':'off';}
+  else if(type==='group'){try{const c=await getDoc(doc(db,'chats',chatId));stTxt=`${(c.data()?.members||[]).length} members`;stCls='on';}catch{}}
+
+  panel.innerHTML=`
+    <div class="ch">
+      <button class="ch-back" onclick="closeChat()">‹</button>
+      ${type==='group'?`<div class="av" style="width:38px;height:38px;font-size:14px;background:#6366f1">👥</div>`:avEl(name,uid2,38,allUsers.find(x=>x.uid===uid2)?.photoURL)}
+      <div class="ch-info"><div class="ch-name">${esc(name)}</div><div class="ch-status ${stCls}" id="chSt">${stTxt}</div></div>
+      <div class="ch-acts">
+        <div class="enc-pill">🔒 E2E</div>
+        <button class="hbtn" title="Delete this chat" onclick="deleteMyChat('${chatId}','${esc(name)}')">🗑️</button>
+      </div>
+    </div>
+    <div class="msgs" id="msgsArea"></div>
+    <div class="typing-bar" id="typingBar"><div class="tdots"><span></span><span></span><span></span></div><span id="typingTxt"></span></div>
+    <div class="reply-bar" id="replyBar">
+      <div style="font-size:15px">↩️</div>
+      <div class="rb-txt"><strong id="rbWho"></strong><span id="rbTxt"></span></div>
+      <button class="rb-x" onclick="cancelReply()">✕</button>
+    </div>
+    <div class="chat-input">
+      <div class="inp-wrap">
+        <textarea id="msgTxt" placeholder="Type a message…" rows="1"
+          oninput="window._resize(this);window._typing('${chatId}')"
+          onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();window._send('${chatId}','${type}','${uid2}')}"></textarea>
+        <button class="att" onclick="window._pickPhoto('${chatId}|${type}|${uid2}')">📎</button>
+      </div>
+      <button class="send-btn" onclick="window._send('${chatId}','${type}','${uid2}')">
+        <svg viewBox="0 0 24 24" fill="currentColor" width="18" height="18"><path d="M2 21l21-9L2 3v7l15 2-15 2z"/></svg>
+      </button>
+    </div>`;
+
+  // Live presence
+  if(type==='direct'&&uid2){
+    unsubPresence[uid2]=onSnapshot(doc(db,'users',uid2),snap=>{
+      const d=snap.data()||{};const el=$('chSt');if(!el)return;
+      el.textContent=d.online?'Online':`Last seen ${d.lastSeen?fmtT(d.lastSeen):''}`;
+      el.className=`ch-status ${d.online?'on':'off'}`;
+    });
+  }
+  // Typing
+  onSnapshot(doc(db,'chats',chatId),snap=>{
+    const typing=snap.data()?.typing||{};
+    const others=Object.entries(typing).filter(([uid,v])=>uid!==me.uid&&v);
+    const bar=$('typingBar'),txt=$('typingTxt');
+    if(others.length&&bar&&txt){txt.textContent=others.map(([,v])=>v.name||'Someone').join(', ')+(others.length===1?' is typing…':' are typing…');bar.classList.add('on');}
+    else if(bar)bar.classList.remove('on');
+  });
+
+  // Messages — decrypt on the fly
+  const mq=query(collection(db,'chats',chatId,'messages'),orderBy('createdAt','asc'));
+  unsubMsgs=onSnapshot(mq,async snap=>{
+    const area=$('msgsArea');if(!area)return;
+    // Get decryption key
+    const encKey=type==='group'?await getGroupKey(chatId):await getKey(me.uid,uid2);
+    area.innerHTML='';let lastDate='';
+    const decrypted=await Promise.all(snap.docs.map(async d=>{
+      const msg={id:d.id,...d.data()};
+      if(msg.deleted)return{...msg,text:'',decText:''};
+      if(msg.enc&&!msg.deleted){
+        try{msg.decText=await decryptMsg(msg.enc,encKey);}
+        catch{msg.decText='[Encrypted]';}
+      }else{msg.decText=msg.text||'';}
+      // Also decrypt reply preview
+      if(msg.replyTo?.enc){
+        try{msg.replyTo.text=await decryptMsg(msg.replyTo.enc,encKey);}catch{}
+      }
+      return msg;
+    }));
+    decrypted.forEach(msg=>{
+      const md=fmtD(msg.createdAt);
+      if(md&&md!==lastDate){lastDate=md;area.innerHTML+=`<div class="date-sep"><span>${md}</span></div>`;}
+      area.innerHTML+=buildMsg(msg,type,chatId);
+    });
+    // Auto-scroll to newest message
+    requestAnimationFrame(()=>{area.scrollTop=area.scrollHeight;});
+    // Mark read
+    snap.docs.forEach(d=>{
+      const msg=d.data();
+      if(msg.senderId!==me.uid&&!(msg.readBy||{})[me.uid]){
+        const u={};u[`readBy.${me.uid}`]=true;
+        updateDoc(doc(db,'chats',chatId,'messages',d.id),u).catch(()=>{});
+      }
+    });
+  });
+  listenChats();
+  setTimeout(()=>$('msgTxt')?.focus(),80);
+}
+
+// ════ BUILD MESSAGE ════
+function buildMsg(msg,chatType,chatId){
+  const isMe=msg.senderId===me.uid;
+  const time=fmtT(msg.createdAt);
+  let tick='';
+  if(isMe){const readers=Object.keys(msg.readBy||{}).filter(k=>k!==me.uid);tick=readers.length?'<span class="rtick seen">✓✓</span>':msg.deliveredAt?'<span class="rtick">✓✓</span>':'<span class="rtick">✓</span>';}
+  const senderLine=(!isMe&&chatType==='group')?`<div data-sender="${esc(msg.senderName)}" style="font-size:11px;font-weight:700;margin-bottom:3px;color:${uClr(msg.senderId)}">${esc(msg.senderName)}</div>`:'';
+  let content='';
+  if(msg.deleted){content=`<span style="color:var(--text3);font-style:italic;font-size:13px">🚫 Message deleted</span>`;}
+  else if(msg.type==='image'){content=`<img class="cimg" src="${msg.imageUrl}" onclick="document.getElementById('lightboxImg').src=this.src;document.getElementById('lightbox').classList.add('on')">`;}
+  else{content=`<span class="msg-text-content">${esc(msg.decText||msg.text||'')}</span>`;}
+  const editedTag=msg.edited&&!msg.deleted?'<span class="etag"> (edited)</span>':'';
+  const replyHtml=msg.replyTo&&!msg.deleted?`<div class="rp"><strong>↩ ${esc(msg.replyTo.senderName)}</strong>${esc((msg.replyTo.text||'📷 Photo').slice(0,80))}</div>`:'';
+  const reactMap={};Object.entries(msg.reactions||{}).forEach(([uid,em])=>{if(em){reactMap[em]=reactMap[em]||[];reactMap[em].push(uid);}});
+  const reactHtml=Object.keys(reactMap).length?`<div class="reacts">${Object.entries(reactMap).map(([em,uids])=>`<div class="rchip${uids.includes(me.uid)?' mine':''}" onclick="toggleReact('${chatId}','${msg.id}','${em}')">${em}<span>${uids.length}</span></div>`).join('')}</div>`:'';
+  const canEdit=isMe&&msg.type!=='image'&&!msg.deleted;
+  const canDel=!msg.deleted;
+  // Instagram-style emoji popup (appears above bubble on hover)
+  const reactPopup=!msg.deleted?`<div class="react-popup" id="rp_${msg.id}">
+    ${REACTS.map(em=>`<div class="rp-e" onclick="toggleReact('${chatId}','${msg.id}','${em}');closeAllPopups()">${em}</div>`).join('')}
+  </div>`:'';
+  // Three-dot button beside bubble
+  const dotBtn=!msg.deleted?`<button class="dot-btn" onclick="openCtx(event,'${msg.id}','${chatId}',${isMe},${!!canEdit})" title="More">⋯</button>`:'';
+  const bubbleHtml=`
+    <div class="bwrap${msg.replyTo&&!msg.deleted?' has-rp':''}">
+      ${reactPopup}
+      ${replyHtml}
+      <div class="bubble-outer">
+        <div class="bubble ${isMe?'mine':'theirs'}" onmouseenter="showReactPopup('rp_${msg.id}')" onmouseleave="hideReactPopup('rp_${msg.id}')">
+          ${senderLine}${content}${editedTag}
+        </div>
+        <div class="m-meta ${isMe?'meta-me':'meta-them'}"><span class="enc-icon">🔒</span><span class="m-time">${time}</span>${tick}</div>
+      </div>
+      ${reactHtml}
+    </div>`;
+  // Layout: dot-btn on left for me, right for them
+  return isMe
+    ? `<div class="mrow me" id="msg_${msg.id}">${dotBtn}${bubbleHtml}</div>`
+    : `<div class="mrow them" id="msg_${msg.id}">
+        <div class="m-av">${avEl(msg.senderName,msg.senderId,26,allUsers.find(x=>x.uid===msg.senderId)?.photoURL)}</div>
+        ${bubbleHtml}${dotBtn}
+       </div>`;
+}
+
+// ════ SEND — ENCRYPT BEFORE SAVING ════
+window._send=async function(chatId,type,uid2){
+  const inp=$('msgTxt');const text=inp.value.trim();if(!text)return;
+  inp.value='';inp.style.height='auto';
+  try{const u={};u[`typing.${me.uid}`]=null;await updateDoc(doc(db,'chats',chatId),u);}catch{}
+  const encKey=type==='group'?await getGroupKey(chatId):await getKey(me.uid,uid2);
+  const enc=await encryptMsg(text,encKey);
+  const msgData={type:'text',enc,text:'[encrypted]'};// text field is placeholder only
+  if(replyTo){
+    // Encrypt reply preview too
+    const encReplyText=await encryptMsg(replyTo.text,encKey);
+    msgData.replyTo={id:replyTo.id,enc:encReplyText,senderName:replyTo.senderName,text:'[encrypted]'};
+  }
+  cancelReply();
+  await _push(chatId,type,uid2,msgData,text);
+}
+
+async function _push(chatId,type,uid2,msgData,plainPreview=''){
+  try{
+    const full={...msgData,senderId:me.uid,senderName:me.displayName,createdAt:serverTimestamp(),deliveredAt:serverTimestamp(),readBy:{[me.uid]:true},reactions:{},deleted:false};
+    await addDoc(collection(db,'chats',chatId,'messages'),full);
+    const cs=await getDoc(doc(db,'chats',chatId));const members=cs.data()?.members||[];
+    // Store a short NON-encrypted preview just for chat list (type only, no content)
+    const preview=msgData.type==='image'?'Photo':'Message';
+    const upd={lastMsgPreview:preview,lastAt:serverTimestamp()};
+    members.forEach(m=>{if(m!==me.uid)upd[`unread.${m}`]=(cs.data()?.unread?.[m]||0)+1;});
+    await updateDoc(doc(db,'chats',chatId),upd);
+  }catch(e){toast('Failed to send','err');console.error(e);}
+}
+
+// ════ REACTIONS ════
+window.toggleReact=async function(chatId,msgId,emoji){
+  try{const snap=await getDoc(doc(db,'chats',chatId,'messages',msgId));const reactions=snap.data()?.reactions||{};const upd={};upd[`reactions.${me.uid}`]=reactions[me.uid]===emoji?null:emoji;await updateDoc(doc(db,'chats',chatId,'messages',msgId),upd);}catch(e){console.error(e);}
+}
+// legacy aliases kept for safety
+window.toggleEP=function(e,id){e.stopPropagation();}
+window.closeEPs=function(){closeAllPopups();}
+
+// ════ REPLY ════
+window.setReply=function(id,text,senderName){replyTo={id,text,senderName};$('replyBar').classList.add('on');$('rbWho').textContent='↩ '+senderName;$('rbTxt').textContent=text.slice(0,80);$('msgTxt')?.focus();}
+window.cancelReply=function(){replyTo=null;const rb=$('replyBar');if(rb)rb.classList.remove('on');}
+
+// ════ EDIT (re-encrypt) ════
+window.openEdit=function(chatId,msgId,oldText){editState={chatId,msgId};$('editTxt').value=oldText;$('editModal').classList.add('on');setTimeout(()=>$('editTxt').focus(),100);}
+window.closeEdit=function(){editState=null;$('editModal').classList.remove('on');}
+window.saveEdit=async function(){
+  if(!editState)return;
+  const newText=$('editTxt').value.trim();if(!newText){toast('Cannot be empty','err');return;}
+  try{
+    // Get the chat to find uid2
+    const chatSnap=await getDoc(doc(db,'chats',editState.chatId));
+    const chatData=chatSnap.data()||{};
+    const uid2=chatData.type==='group'?'':chatData.members.find(m=>m!==me.uid)||'';
+    const encKey=chatData.type==='group'?await getGroupKey(editState.chatId):await getKey(me.uid,uid2);
+    const enc=await encryptMsg(newText,encKey);
+    await updateDoc(doc(db,'chats',editState.chatId,'messages',editState.msgId),{enc,text:'[encrypted]',edited:true,editedAt:serverTimestamp()});
+    closeEdit();toast('Edited ✓','ok');
+  }catch(e){toast('Failed to edit','err');console.error(e);}
+}
+
+// ════ DELETE MESSAGE ════
+// deleteForEveryone=true → marks deleted for all
+// deleteForEveryone=false → removes from sender's view only (sets deleted flag)
+window.deleteMsg=async function(chatId,msgId,deleteForEveryone){
+  const label=deleteForEveryone?'Delete for everyone?':'Delete this message?';
+  if(!confirm(label))return;
+  try{
+    if(deleteForEveryone){
+      await updateDoc(doc(db,'chats',chatId,'messages',msgId),{deleted:true,enc:null,text:'',imageUrl:null,reactions:{}});
+      toast('Deleted for everyone','ok');
+    }else{
+      // Delete just for me — add uid to "deletedFor" list
+      await updateDoc(doc(db,'chats',chatId,'messages',msgId),{[`deletedFor.${me.uid}`]:true});
+      toast('Deleted for you','ok');
+    }
+  }catch(e){toast('Failed to delete','err');}
+}
+
+// ════ DELETE MY CHAT (user can delete their own chat view) ════
+window.deleteMyChat=async function(chatId,name){
+  const choice=confirm(`Delete chat with "${name}"?\n\nOK = Delete for me only\nCancel = Keep`);
+  if(!choice)return;
+  try{
+    // Mark this chat as hidden for the current user
+    const u={};u[`hiddenFor.${me.uid}`]=true;
+    await updateDoc(doc(db,'chats',chatId),u);
+    activeChatId=null;if(unsubMsgs){unsubMsgs();unsubMsgs=null;}
+    resetChatPanel();toast('Chat deleted for you','ok');
+  }catch(e){toast('Failed','err');}
+}
+
+// ════ TYPING ════
+window._typing=async function(chatId){
+  try{const u={};u[`typing.${me.uid}`]={name:me.displayName,at:true};await updateDoc(doc(db,'chats',chatId),u);}catch{}
+  clearTimeout(typingTimer);typingTimer=setTimeout(async()=>{try{const u={};u[`typing.${me.uid}`]=null;await updateDoc(doc(db,'chats',chatId),u);}catch{}},2000);
+}
+
+// ════ PHOTO ════
+window._pickPhoto=function(info){$('photoInput').dataset.info=info;$('photoInput').click();}
+window.handlePhoto=async function(e){
+  const file=e.target.files[0];if(!file)return;
+  const [chatId,type,uid2]=$('photoInput').dataset.info.split('|');
+  e.target.value='';if(file.size>8*1024*1024){toast('Max 8MB','err');return;}
+  toast('Sending photo…','info');
+  try{
+    const url=await compress(file,900,.75);
+    await _push(chatId,type,uid2,{type:'image',imageUrl:url,enc:null,text:''},);
+  }catch(ex){toast('Failed','err');}
+}
+function compress(file,max,q){return new Promise((res,rej)=>{const r=new FileReader();r.onload=e=>{const img=new Image();img.onload=()=>{const c=document.createElement('canvas');let w=img.width,h=img.height;if(w>max||h>max){const s=Math.min(max/w,max/h);w=Math.round(w*s);h=Math.round(h*s);}c.width=w;c.height=h;c.getContext('2d').drawImage(img,0,0,w,h);res(c.toDataURL('image/jpeg',q));};img.onerror=rej;img.src=e.target.result;};r.onerror=rej;r.readAsDataURL(file);});}
+
+// ════ PROFILE ════
+window.openProfile=async function(){
+  $('profileOverlay').classList.add('on');
+  try{const snap=await getDoc(doc(db,'users',me.uid));const u=snap.data()||{};
+    $('prof_name').value=u.displayName||'';$('prof_bio').value=u.bio||'';$('prof_ok').classList.remove('on');
+    const big=$('profAvBig');
+    if(u.photoURL){big.innerHTML=`<img src="${u.photoURL}" style="width:100%;height:100%;object-fit:cover;border-radius:50%"><div class="av-edit">✏️</div>`;}
+    else{big.innerHTML=`<span style="font-size:30px;font-weight:700">${inits(u.displayName)}</span><div class="av-edit">✏️</div>`;big.style.background=uClr(me.uid);}
+  }catch{}
+}
+window.closeProfile=()=>$('profileOverlay').classList.remove('on');
+window.uploadProfilePic=async function(e){
+  const file=e.target.files[0];if(!file)return;e.target.value='';
+  if(file.size>4*1024*1024){toast('Max 4MB','err');return;}
+  toast('Uploading…','info');
+  try{const url=await compress(file,300,.85);await updateDoc(doc(db,'users',me.uid),{photoURL:url});me.photoURL=url;sessionStorage.setItem('nc_u',JSON.stringify(me));
+    $('profAvBig').innerHTML=`<img src="${url}" style="width:100%;height:100%;object-fit:cover;border-radius:50%"><div class="av-edit">✏️</div>`;
+    const myav=$('myAv');myav.style.padding='0';myav.style.overflow='hidden';myav.innerHTML=`<img src="${url}" style="width:100%;height:100%;object-fit:cover;border-radius:50%">`;
+    toast('Photo updated!','ok');
+  }catch(e){toast('Failed','err');}
+}
+window.saveProfile=async function(){
+  const name=$('prof_name').value.trim();const bio=$('prof_bio').value.trim();
+  if(!name){toast('Name cannot be empty','err');return;}
+  try{await updateDoc(doc(db,'users',me.uid),{displayName:name,bio});me.displayName=name;sessionStorage.setItem('nc_u',JSON.stringify(me));$('myDN').textContent=name;$('prof_ok').textContent='✓ Saved!';$('prof_ok').classList.add('on');toast('Profile updated!','ok');}
+  catch(e){toast('Failed','err');}
+}
+
+// ════ ADMIN ════
+window.openAdmin=async function(){$('adminOverlay').classList.add('on');$('nu_err').classList.remove('on');$('nu_ok').classList.remove('on');await refreshUserTable();await loadAdminChats();}
+window.closeAdmin=()=>$('adminOverlay').classList.remove('on');
+window.togglePw=function(uid,pw){
+  const el=$('pw_'+uid);if(!el)return;
+  if(el.dataset.revealed==='1'){el.textContent='••••••';el.dataset.revealed='0';el.title='Click to reveal';}
+  else{el.textContent=pw;el.dataset.revealed='1';el.title='Click to hide';}
+}
+async function refreshUserTable(){
+  try{const snap=await getDocs(collection(db,'users'));const rows=[];
+    snap.forEach(d=>{const u=d.data();
+      const pwCell=u.loginType==='admin'&&u.password
+        ?`<span id="pw_${d.id}" style="font-family:monospace;font-size:12px;color:var(--text2);cursor:pointer;user-select:none" title="Click to reveal" onclick="togglePw('${d.id}','${esc(u.password)}')">••••••</span>`
+        :`<span style="font-size:11px;color:var(--text3)">—</span>`;
+      rows.push(`<tr>
+      <td>${esc(u.displayName)}</td>
+      <td style="font-family:monospace;font-size:11px;color:var(--text2)">${u.loginType==='firebase'?esc(u.email||d.id):'@'+d.id}</td>
+      <td>${pwCell}</td>
+      <td>
+        ${u.isAdmin?'<span style="font-size:10px;background:rgba(239,68,68,.12);color:var(--red);padding:2px 7px;border-radius:10px;font-weight:700">Admin</span>':''}
+        <span style="font-size:10px;background:${u.loginType==='firebase'?'rgba(34,197,94,.1)':'rgba(79,125,247,.1)'};color:${u.loginType==='firebase'?'var(--green)':'var(--accent)'};padding:2px 7px;border-radius:10px;margin-left:3px">${u.loginType==='firebase'?'Google/Email':'Username'}</span>
+      </td>
+      <td style="display:flex;gap:5px;align-items:center;flex-wrap:wrap">
+        ${d.id!==me.uid?`
+          <button class="del-btn" style="background:rgba(79,125,247,.1);color:var(--accent)" onclick="toggleAdminStatus('${d.id}','${u.displayName}',${!!u.isAdmin})">${u.isAdmin?'Revoke Admin':'Make Admin'}</button>
+          <button class="del-btn" onclick="adminDeleteUser('${d.id}','${esc(u.displayName)}','${u.loginType||'admin'}')">Remove</button>
+        `:'<span style="font-size:11px;color:var(--text3)">You</span>'}
+      </td>
+    </tr>`);});
+    $('userTableBody').innerHTML=rows.join('')||`<tr><td colspan="4" style="color:var(--text3);text-align:center;padding:16px">No users</td></tr>`;
+  }catch(e){console.error(e);}
+}
+async function loadAdminChats(){
+  const el=$('adminChatList');
+  try{const snap=await getDocs(collection(db,'chats'));if(snap.empty){el.innerHTML='<div style="color:var(--text3);font-size:13px">No chats</div>';return;}
+    const rows=[];snap.forEach(d=>{const c=d.data();const name=c.type==='group'?c.name:c.members?.join(' ↔ ');
+      rows.push(`<div style="display:flex;align-items:center;gap:10px;padding:8px 12px;background:var(--s2);border-radius:9px">
+        <div style="flex:1;min-width:0"><div style="font-size:13px;font-weight:600">${esc(name||'Chat')}</div><div style="font-size:11px;color:var(--text3)">${c.type==='group'?'Group':'Direct'} · ${c.members?.length||0} members</div></div>
+        <button class="del-btn" onclick="adminDeleteChat('${d.id}','${esc(name||'chat')}')">🗑 Delete All</button></div>`);
+    });el.innerHTML=rows.join('');
+  }catch(e){el.innerHTML='<div style="color:var(--red);font-size:13px">Error</div>';}
+}
+window.adminCreateUser=async function(){
+  const dn=$('nu_dn').value.trim();const un=$('nu_un').value.trim().toLowerCase().replace(/\s+/g,'_');const pw=$('nu_pw').value;
+  $('nu_err').classList.remove('on');$('nu_ok').classList.remove('on');
+  if(!dn||!un||!pw){$('nu_err').textContent='All fields required.';$('nu_err').classList.add('on');return;}
+  if(pw.length<4){$('nu_err').textContent='Password min 4 chars.';$('nu_err').classList.add('on');return;}
+  if(!/^[a-z0-9_]{2,20}$/.test(un)){$('nu_err').textContent='Username: 2-20 chars, letters/numbers/underscore.';$('nu_err').classList.add('on');return;}
+  try{const snap=await getDoc(doc(db,'users',un));if(snap.exists()){$('nu_err').textContent='Username already taken.';$('nu_err').classList.add('on');return;}
+    await setDoc(doc(db,'users',un),{uid:un,username:un,nexchat_username:un,displayName:dn,password:pw,isAdmin:false,online:false,lastSeen:serverTimestamp(),createdAt:serverTimestamp(),bio:'',photoURL:null,loginType:'admin'});
+    await setDoc(doc(db,'usernames',un),{uid:un});
+    $('nu_ok').textContent=`✓ Created! Username: @${un}  Password: ${pw}`;$('nu_ok').classList.add('on');
+    $('nu_dn').value='';$('nu_un').value='';$('nu_pw').value='';
+    await refreshUserTable();await loadAllUsers();toast(`"${dn}" created ✓`,'ok');
+  }catch(e){$('nu_err').textContent='Error: '+e.message;$('nu_err').classList.add('on');}
+}
+// FIX: Delete from BOTH Firestore AND Firebase Auth
+window.adminDeleteUser=async function(uid,name,loginType){
+  if(!confirm(`Remove "${name}" from ApnaAdda?\n\nThis will delete their account permanently.`))return;
+  try{
+    // Also remove from usernames index
+    const userSnap=await getDoc(doc(db,'users',uid));
+    const nexchat_username=userSnap.data()?.nexchat_username||userSnap.data()?.username;
+    await deleteDoc(doc(db,'users',uid));
+    if(nexchat_username){try{await deleteDoc(doc(db,'usernames',nexchat_username));}catch{}}
+    if(loginType==='firebase'){
+      await setDoc(doc(db,'banned',uid),{bannedAt:serverTimestamp(),reason:'Removed by admin'});
+    }
+    await loadAllUsers();await refreshUserTable();toast(`"${name}" removed ✓`,'ok');
+  }catch(e){toast('Failed: '+e.message,'err');}
+}
+// Toggle admin status for a user
+window.toggleAdminStatus=async function(uid,name,currentlyAdmin){
+  const action=currentlyAdmin?'Revoke admin from':'Grant admin to';
+  if(!confirm(`${action} "${name}"?`))return;
+  try{
+    await updateDoc(doc(db,'users',uid),{isAdmin:!currentlyAdmin});
+    toast(`${name} is now ${!currentlyAdmin?'an Admin':'a regular User'}`, 'ok');
+    await refreshUserTable();
+  }catch(e){toast('Failed: '+e.message,'err');}
+}
+
+// Fix all non-admin users who accidentally got isAdmin:true
+window.fixAllUsers=async function(){
+  if(!confirm('This will set isAdmin:false for ALL users except you. Continue?'))return;
+  try{
+    const snap=await getDocs(collection(db,'users'));
+    const batch=writeBatch(db);
+    let fixed=0;
+    snap.forEach(d=>{
+      if(d.id!==me.uid&&d.data().isAdmin===true){
+        batch.update(doc(db,'users',d.id),{isAdmin:false});
+        fixed++;
+      }
+    });
+    await batch.commit();
+    toast(`Fixed ${fixed} user(s) — isAdmin set to false`,'ok');
+    await refreshUserTable();
+    await loadAllUsers();
+  }catch(e){toast('Failed: '+e.message,'err');}
+}
+
+window.adminDeleteChat=async function(chatId,name){
+  if(!confirm(`DELETE entire chat "${name}"? This permanently deletes ALL messages.`))return;
+  try{const ms=await getDocs(collection(db,'chats',chatId,'messages'));const batch=writeBatch(db);ms.forEach(d=>batch.delete(d.ref));batch.delete(doc(db,'chats',chatId));await batch.commit();if(activeChatId===chatId){activeChatId=null;resetChatPanel();}toast('Chat deleted','ok');await loadAdminChats();}
+  catch(e){toast('Failed: '+e.message,'err');}
+}
+
+// ════ CHAT ROW 3-DOT MENU ════
+window.openChatDotMenu=function(e,chatId,name,type){
+  e.stopPropagation();
+  closeCtx();
+  const menu=document.createElement('div');
+  menu.className='ctx';menu.id='ctxMenu';
+  const items=[];
+  items.push(`<button class="ctx-item danger" onclick="deleteChatForMe('${chatId}','${esc(name)}')">🗑️  Delete for me</button>`);
+  if(me.isAdmin){
+    items.push(`<button class="ctx-item danger" onclick="adminDeleteChat('${chatId}','${esc(name)}')">💥  Delete for everyone</button>`);
+  }
+  menu.innerHTML=items.join('');
+  document.body.appendChild(menu);
+  const x=Math.min(e.clientX,window.innerWidth-180);
+  const y=Math.min(e.clientY+4,window.innerHeight-menu.offsetHeight-10);
+  menu.style.left=x+'px';menu.style.top=y+'px';
+  _ctxCleanup=function(ev){if(!menu.contains(ev.target))closeCtx();};
+  setTimeout(()=>document.addEventListener('click',_ctxCleanup),10);
+}
+window.deleteChatForMe=async function(chatId,name){
+  if(!confirm(`Remove "${name}" from your chat list?\n\nMessages won't be deleted for the other person.`))return;
+  try{
+    // Mark chat as hidden for current user by storing their UID in a hiddenFor map
+    await updateDoc(doc(db,'chats',chatId),{[`hiddenFor.${me.uid}`]:true});
+    if(activeChatId===chatId){activeChatId=null;resetChatPanel();}
+    toast('Chat removed from your list','ok');
+  }catch(e){toast('Failed: '+e.message,'err');}
+}
+
+// ════ GROUP ════
+window.showNewGroup=async function(){
+  $('groupOverlay').classList.add('on');
+  $('grp_name').value='';
+  $('grp_members').innerHTML=`<div class="empty-hint" style="padding:16px"><div class="ei">⏳</div><p>Loading friends…</p></div>`;
+  try{
+    // Only show people we have an active (non-hidden) direct chat with = friends
+    const q=query(collection(db,'chats'),where('members','array-contains',me.uid),where('type','==','direct'));
+    const snap=await getDocs(q);
+    const friendUids=[];
+    snap.forEach(d=>{
+      const data=d.data();
+      if((data.hiddenFor||{})[me.uid])return; // skip chats user deleted
+      const other=data.members.find(m=>m!==me.uid);
+      if(other&&!friendUids.includes(other))friendUids.push(other);
+    });
+    if(!friendUids.length){
+      $('grp_members').innerHTML=`<div class="empty-hint" style="padding:16px"><div class="ei">👤</div><p>No friends yet.<br>Find someone in <strong>People</strong> and start a chat first.</p></div>`;
+      return;
+    }
+    // Fetch their user docs
+    const friends=[];
+    for(const uid of friendUids){
+      try{
+        const uSnap=await getDoc(doc(db,'users',uid));
+        if(uSnap.exists()&&!uSnap.data().banned)friends.push({uid,...uSnap.data()});
+      }catch{}
+    }
+    if(!friends.length){
+      $('grp_members').innerHTML=`<div class="empty-hint" style="padding:16px"><div class="ei">👤</div><p>No friends available.</p></div>`;
+      return;
+    }
+    $('grp_members').innerHTML=friends.map(u=>`
+      <label class="mcheck">
+        ${avEl(u.displayName,u.uid,28,u.photoURL)}
+        <div style="flex:1;min-width:0">
+          <div style="font-size:13px;font-weight:500">${esc(u.displayName)}</div>
+          <div style="font-size:11px;color:var(--text3)">@${esc(u.nexchat_username||u.username||u.uid)}</div>
+        </div>
+        <input type="checkbox" value="${u.uid}" class="gcb">
+      </label>`).join('');
+  }catch(e){$('grp_members').innerHTML=`<div style="color:var(--red);font-size:13px;padding:12px">Failed to load friends</div>`;console.error(e);}
+}
+window.closeGroupModal=()=>$('groupOverlay').classList.remove('on');
+window.createGroup=async function(){
+  const name=$('grp_name').value.trim();if(!name){toast('Enter a group name','err');return;}
+  const cbs=document.querySelectorAll('.gcb:checked');const members=[me.uid,...[...cbs].map(c=>c.value)];if(members.length<2){toast('Select at least 1 member','err');return;}
+  try{const ref=await addDoc(collection(db,'chats'),{type:'group',name,members,createdBy:me.uid,createdAt:serverTimestamp(),lastMsgPreview:'',lastAt:serverTimestamp(),unread:Object.fromEntries(members.map(m=>[m,0]))});closeGroupModal();$('grp_name').value='';openChatById(ref.id,'group',name,'');toast(`"${name}" created! 🎉`,'ok');}
+  catch(e){toast('Failed','err');}
+}
+
+// ════ UI ════
+// ── goChat: open chat AND switch sidebar to Chats tab ──
+window.goChat=async function(uid2,name){
+  // Switch sidebar to Chats tab first
+  const chatsTabBtn=document.querySelectorAll('.tab-btn')[0];
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('on'));
+  chatsTabBtn.classList.add('on');
+  ['chatListTab','peopleTab'].forEach(id=>{$(id).style.display='none';});
+  $('chatListTab').style.display='flex';$('chatListTab').style.flexDirection='column';
+  // Then open the chat
+  await openDirectChat(uid2,name);
+  if(window.innerWidth<=660)$('chatPanel').classList.add('open');
+}
+
+// ── Instagram emoji popup ──
+window.showReactPopup=function(id){
+  closeAllPopups();
+  const el=$(id); if(el) el.classList.add('on');
+}
+window.hideReactPopup=function(id){
+  // Small delay so user can move mouse to popup
+  const el=$(id);
+  if(el) el._hideTimer=setTimeout(()=>el.classList.remove('on'),400);
+}
+// Keep popup open when mouse enters it
+document.addEventListener('mouseenter',function(e){
+  if(e.target.closest('.react-popup')){
+    const rp=e.target.closest('.react-popup');
+    clearTimeout(rp._hideTimer);
+  }
+},true);
+document.addEventListener('mouseleave',function(e){
+  if(e.target.closest('.react-popup')){
+    const rp=e.target.closest('.react-popup');
+    rp._hideTimer=setTimeout(()=>rp.classList.remove('on'),300);
+  }
+},true);
+window.closeAllPopups=function(){
+  document.querySelectorAll('.react-popup').forEach(p=>p.classList.remove('on'));
+  closeCtx();
+}
+
+// ── Three-dot context menu ──
+let _ctxCleanup=null;
+window.openCtx=function(e,msgId,chatId,isMe,canEdit){
+  e.stopPropagation();
+  closeCtx();
+  const menu=document.createElement('div');
+  menu.className='ctx';menu.id='ctxMenu';
+  const items=[];
+  items.push(`<button class="ctx-item" onclick="setReplyFromCtx('${msgId}','${chatId}')">↩️  Reply</button>`);
+  if(canEdit) items.push(`<button class="ctx-item" onclick="openEditFromCtx('${msgId}','${chatId}')">✏️  Edit</button>`);
+  items.push(`<button class="ctx-item danger" onclick="deleteMsg('${chatId}','${msgId}',false)">🗑️  Delete for me</button>`);
+  if(isMe) items.push(`<button class="ctx-item danger" onclick="deleteMsg('${chatId}','${msgId}',true)">🗑️  Delete for everyone</button>`);
+  menu.innerHTML=items.join('');
+  document.body.appendChild(menu);
+  // Position near click
+  const x=Math.min(e.clientX,window.innerWidth-170);
+  const y=Math.min(e.clientY,window.innerHeight-menu.offsetHeight-10);
+  menu.style.left=x+'px'; menu.style.top=y+'px';
+  // Close on outside click
+  _ctxCleanup=function(ev){if(!menu.contains(ev.target))closeCtx();};
+  setTimeout(()=>document.addEventListener('click',_ctxCleanup),10);
+}
+window.closeCtx=function(){
+  const m=$('ctxMenu'); if(m)m.remove();
+  if(_ctxCleanup){document.removeEventListener('click',_ctxCleanup);_ctxCleanup=null;}
+}
+window.setReplyFromCtx=function(msgId,chatId){
+  closeCtx();
+  // Find message data from DOM
+  const row=document.getElementById('msg_'+msgId);
+  if(row){
+    const txt=row.querySelector('.bubble')?.innerText||'';
+    const who=row.querySelector('[data-sender]')?.dataset?.sender||me.displayName;
+    setReply(msgId,txt.slice(0,60),who);
+  }
+}
+window.openEditFromCtx=function(msgId,chatId){
+  closeCtx();
+  const row=document.getElementById('msg_'+msgId);
+  const txt=row?.querySelector('.msg-text-content')?.textContent||'';
+  openEdit(chatId,msgId,txt);
+}
+
+window.showTab=function(tab,btn){
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('on'));btn.classList.add('on');
+  ['chatListTab','peopleTab'].forEach(id=>{$(id).style.display='none';});
+  if(tab==='chats'){$('chatListTab').style.display='flex';$('chatListTab').style.flexDirection='column';}
+  else if(tab==='people'){
+    $('peopleTab').style.display='flex';$('peopleTab').style.flexDirection='column';
+    $('peopleSearch').value='';filterPeople();
+    setTimeout(()=>$('peopleSearch')?.focus(),50);
+  }
+}
+window.closeChat=function(){
+  activeChatId=null;replyTo=null;if(unsubMsgs){unsubMsgs();unsubMsgs=null;}
+  resetChatPanel();if(window.innerWidth<=660)$('chatPanel').classList.remove('open');
+}
+window._resize=el=>{el.style.height='auto';el.style.height=Math.min(el.scrollHeight,120)+'px';};
+
+// ════ CHECK BANNED ON LOGIN ════
+// Intercept Firebase auth users who were deleted from Firestore
+async function checkBanned(uid){
+  const banned=await getDoc(doc(db,'banned',uid));
+  return banned.exists();
+}
+// Patch handleFbUser to check banned
+const _origHandleFbUser=handleFbUser;
+</script>
+</body>
+</html>
